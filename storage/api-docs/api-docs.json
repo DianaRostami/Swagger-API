@@ -18,91 +18,76 @@
         }
     ],
     "paths": {
-        "/api/resources": {
+        "/resources": {
             "get": {
-                "summary": "Retrieve all resources",
-                "description": "Retrieve a list of all resources",
-                "operationId": "ee96de2f37d473ea4740b7700ddd1daf",
+                "tags": [
+                    "Resource"
+                ],
+                "summary": "Get a list of resources",
+                "operationId": "b68ca62605727ce3ea6d4551e462e567",
                 "responses": {
                     "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Resource"
-                                    }
-                                }
-                            }
-                        }
+                        "description": "Successful operation"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             },
             "post": {
-                "summary": "Create a new resource",
-                "description": "Create a new resource in the database",
-                "operationId": "0da436b1bb56ca9fcbc4523e6be6b1cc",
+                "tags": [
+                    "Resource"
+                ],
+                "summary": "Post a new resource",
+                "operationId": "35423e34cd5fd4cdcd4ec832e2986fa1",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Resource"
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Example Name"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "example@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Resource created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Resource"
-                                }
-                            }
-                        }
+                        "description": "Resource created successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
-        "/api/resources/{id}": {
-            "get": {
-                "summary": "Retrieve a single resource",
-                "description": "Retrieve a single resource by ID",
-                "operationId": "0a50757b93fffe7af4ed5452f2af50b7",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID of the resource",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Resource"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Resource not found"
-                    }
-                }
-            },
+        "/resources/{id}": {
             "put": {
-                "summary": "Update a resource",
-                "description": "Update a resource by ID",
-                "operationId": "e2691f77734474fa0b5f3bff96dbb556",
+                "tags": [
+                    "Resource"
+                ],
+                "summary": "Update an existing resource",
+                "operationId": "c20e8736e630a63703369926f0b02866",
                 "parameters": [
                     {
                         "name": "id",
@@ -110,7 +95,8 @@
                         "description": "ID of the resource to update",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
@@ -119,31 +105,47 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Resource"
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Updated name"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "updated@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "newpassword123"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Resource updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Resource"
-                                }
-                            }
-                        }
+                        "description": "Resource updated successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
                     },
                     "404": {
                         "description": "Resource not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             },
             "delete": {
-                "summary": "Delete a resource",
-                "description": "Delete a resource by ID",
-                "operationId": "19d9ee1b48d33cb8863f0554d74b4222",
+                "tags": [
+                    "Resource"
+                ],
+                "summary": "Delete an existing resource",
+                "operationId": "d3169e3c0fab73499b5dcf41024e22bc",
                 "parameters": [
                     {
                         "name": "id",
@@ -151,16 +153,46 @@
                         "description": "ID of the resource to delete",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "example": 1
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Resource deleted successfully"
+                        "description": "Resource deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "Resource not found"
+                        "description": "Resource not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Resource not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
@@ -212,5 +244,11 @@
                 "type": "object"
             }
         }
-    }
+    },
+    "tags": [
+        {
+            "name": "Resource",
+            "description": "Resource"
+        }
+    ]
 }
